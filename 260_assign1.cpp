@@ -16,10 +16,12 @@ int main()
 	
 	
 	int testArray[ROWS][COLS] =
-					{ { 1,   2,  3,  4,  5 },
-					{   6,   7,  8,  9, 10 },
-					{  11,  12, 13, 14, 15 },
-					{  16,  17, 18, 19, 20 } };
+					{ 
+						{ 5, 7, 6, 3, 2 },
+						{ 17, 32, 53, 23, 42 },
+						{ 12, 37, 67, 82, 13 },
+						{ 1, 0, 59, 92, 10 } 
+					};
    
 	
 	cout << "The total of the array elements is "
@@ -75,7 +77,7 @@ double getAverage(int array[][COLS], int rows)
 	// get the sum of all values in the array
 	int sum = getTotal(array, rows);
 	// return the total / number of elements
-  return sum / (rows * COLS);
+  return sum / (static_cast<float>(rows) * COLS);
 }
 
 
