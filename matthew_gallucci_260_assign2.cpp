@@ -16,6 +16,10 @@
 
 using namespace std;
 
+// my own functions to keep my code dry
+int hex_char_to_int(char);
+string int_to_hex_char(int);
+// assigned functions to complete
 int bin_to_dec(string);
 string dec_to_bin(int);
 int hex_to_dec(string);  
@@ -39,12 +43,11 @@ int main()
 	cout<<"F5 hexadecimal = "<<hex_to_dec("F5")<<" decimal\n"; //you should get 245
 	cout<<"1234 hexadecimal = "<<hex_to_dec("1234")<<" decimal\n"; //you should get 4,660
 	cout<<"FDECB hexadecimal = "<<hex_to_dec("FDECB")<<" decimal\n\n"; //you should get 1,040,075
-	/*
+
 	cout<<"512 decimal = "<<dec_to_hex(512)<<" hexadecimal\n"; //you should get 200
 	cout<<"5000 decimal = "<<dec_to_hex(5000)<<" hexadecimal\n"; //you should get 1388
 	cout<<"900000 decimal = "<<dec_to_hex(900000)<<" hexadecimal\n"; //you should get DBBA0
 	cout<<"65525 decimal = "<<dec_to_hex(65525)<<" hexadecimal\n\n"; //you should get FFF5
-	*/
 	
 	system("PAUSE");
 	return 0;
@@ -80,11 +83,10 @@ string dec_to_bin(int n)
 	int quotient = n/2;
 	// set LSB to quotient mod 2
 	int bit = n % 2;
-	bin.insert(0, to_string(bit)); 
 	// continue until the quotient is 0
 	while(quotient != 0) {
-		bit = quotient % 2;
 		bin.insert(0, to_string(bit));
+		bit = quotient % 2;
 		quotient = quotient / 2;
 	}
 	return bin;
@@ -107,20 +109,7 @@ int hex_to_dec(string s)
 			// already a number
 			toAdd = pow(16, bitPosition) * (int)s[i];
 		} else {
-			if (s[i] == 'A')
-			{
-				toAdd = pow(16, bitPosition) * 10;
-			} else if (s[i] == 'B') {
-				toAdd = pow(16, bitPosition) * 11;
-			} else if (s[i] == 'C') {
-				toAdd = pow(16, bitPosition) * 12;
-			} else if (s[i] == 'D') {
-				toAdd = pow(16, bitPosition) * 13;
-			} else if (s[i] == 'E') {
-				toAdd = pow(16, bitPosition) * 14;
-			} else if (s[i] == 'F') {
-				toAdd = pow(16, bitPosition) * 15;
-			}
+			toAdd = pow(16, bitPosition) * hex_char_to_int(s[i]);
 		}
 		// decrement bitPosition with every iteration
 		decimal += toAdd;
@@ -134,8 +123,48 @@ int hex_to_dec(string s)
 
 string dec_to_hex(int n)  
 {
-	return "not yet implemented";
+		// initialize return value
+	string hex = "";
+	// get the first quotient of the number / 2
+	int quotient = n/16;
+	// set LSB to quotient mod 2
+	int bit = n % 16;
+	// continue until the quotient is 0
+	while(quotient != 0) {
+		// add the bit to the return string
+		// cout << "\nbit : " << bit;
+		// cout << "\nbit hex : " << int_to_hex_char(bit) << endl;
+		hex.insert(0, int_to_hex_char(bit));
+		// perform the calculations for the next bit
+		bit = quotient % 16;
+		quotient = quotient / 16;
+	}
+	// inser the LSH symbol after the quotient is zero
+	hex.insert(0, int_to_hex_char(bit));
+	return hex;
 }
 
 
+// my own functions to keep my code dry
+int hex_char_to_int(char c) {
+	if (c == 'A') { return 10; }
+	if (c == 'B') { return 11; }
+	if (c == 'C') { return 12; }
+	if (c == 'D') { return 13; }
+	if (c == 'E') { return 14; }
+	if (c == 'F') { return 15; }
+}
 
+string int_to_hex_char(int v) {
+	// if v is < 11, return v as char
+	if (v < 10) { return to_string(v); }
+	// otherwise, figure out what symbol it should be
+	else {
+		if (v == 10) { return "A"; }
+		if (v == 11) { return "B"; }
+		if (v == 12) { return "C"; }
+		if (v == 13) { return "D"; }
+		if (v == 14) { return "E"; }
+		if (v == 15) { return "F"; }
+	}
+}
