@@ -28,26 +28,34 @@ string dec_to_hex(int);
 
 int main() 
 {
-	
-	cout<<"10000011 binary = "<<bin_to_dec("10000011")<<" decimal\n"; // you should get 131
-	cout<<"01010101 binary = "<<bin_to_dec("01010101")<<" decimal\n"; // you should get 85
-	cout<<"1111111111111111 binary = "<<bin_to_dec("1111111111111111")<<" decimal\n"; // you should get 65,535
-	cout<<"0111111111111111 binary = "<<bin_to_dec("0111111111111111")<<" decimal\n\n"; // you should get 32,767
-	
-	cout<<"255 decimal = "<<dec_to_bin(255)<<" binary\n"; //you should get 11111111
-	cout<<"65532 decimal = "<<dec_to_bin(65532)<<" binary\n"; //you should get 1111111111111100
-	cout<<"12 decimal = "<<dec_to_bin(12)<<" binary\n"; //you should get 1100
-	cout<<"1000000 decimal = "<<dec_to_bin(1000000)<<" binary\n\n"; //you should get 11110100001001000000
-	
-	cout<<"ABC hexadecimal = "<<hex_to_dec("ABC")<<" decimal\n"; //you should get 2,748
-	cout<<"F5 hexadecimal = "<<hex_to_dec("F5")<<" decimal\n"; //you should get 245
-	cout<<"1234 hexadecimal = "<<hex_to_dec("1234")<<" decimal\n"; //you should get 4,660
-	cout<<"FDECB hexadecimal = "<<hex_to_dec("FDECB")<<" decimal\n\n"; //you should get 1,040,075
+	cout << "Binary to Decimal: \n";
+	cout<<"\n00110000 binary = "<<bin_to_dec("00110000")<<" decimal\n"; 
+	cout<<"10000010 binary = "<<bin_to_dec("10000010")<<" decimal\n"; 
+	cout<<"11111000 binary = "<<bin_to_dec("11111000")<<" decimal\n"; 
+	cout<<"1111011000010101 binary = "<<bin_to_dec("1111011000010101")<<" decimal\n"; 
+	cout<<"0010001010011011 binary = "<<bin_to_dec("0010001010011011")<<" decimal\n\n";
 
-	cout<<"512 decimal = "<<dec_to_hex(512)<<" hexadecimal\n"; //you should get 200
-	cout<<"5000 decimal = "<<dec_to_hex(5000)<<" hexadecimal\n"; //you should get 1388
-	cout<<"900000 decimal = "<<dec_to_hex(900000)<<" hexadecimal\n"; //you should get DBBA0
-	cout<<"65525 decimal = "<<dec_to_hex(65525)<<" hexadecimal\n\n"; //you should get FFF5
+	cout << "Decimal to Binary: \n";
+	cout<<"4692 decimal = "<<dec_to_bin(4692)<<" binary\n"; 
+	cout<<"26 decimal = "<<dec_to_bin(26)<<" binary\n";
+	cout<<"2011 decimal = "<<dec_to_bin(2011)<<" binary\n"; 
+	cout<<"7653452 decimal = "<<dec_to_bin(7653452)<<" binary\n";
+	cout<<"801 decimal = "<<dec_to_bin(801)<<" binary\n\n"; 
+
+	cout << "Hex to Decimal: \n";
+	cout<<"ABC hexadecimal = "<<hex_to_dec("ABC")<<" decimal\n"; 
+	cout<<"F5 hexadecimal = "<<hex_to_dec("F5")<<" decimal\n"; 
+	cout<<"1234 hexadecimal = "<<hex_to_dec("1234")<<" decimal\n";
+	cout<<"FDECB hexadecimal = "<<hex_to_dec("FDECB")<<" decimal\n"; 
+	cout<<"FDECB hexadecimal = "<<hex_to_dec("FDECB")<<" decimal\n\n"; 
+
+	cout << "Decimal to Hex: \n";
+	cout<<"512 decimal = "<<dec_to_hex(512)<<" hexadecimal\n";
+	cout<<"5000 decimal = "<<dec_to_hex(5000)<<" hexadecimal\n"; 
+	cout<<"900000 decimal = "<<dec_to_hex(900000)<<" hexadecimal\n";
+	cout<<"65525 decimal = "<<dec_to_hex(65525)<<" hexadecimal\n"; 
+	cout<<"65525 decimal = "<<dec_to_hex(65525)<<" hexadecimal\n\n"; 
+
 	
 	system("PAUSE");
 	return 0;
@@ -89,6 +97,8 @@ string dec_to_bin(int n)
 		bit = quotient % 2;
 		quotient = quotient / 2;
 	}
+	// insert the last bit
+	bin.insert(0, to_string(bit));
 	return bin;
 }
 
@@ -153,6 +163,7 @@ int hex_char_to_int(char c) {
 	if (c == 'D') { return 13; }
 	if (c == 'E') { return 14; }
 	if (c == 'F') { return 15; }
+	else { return -1; }
 }
 
 string int_to_hex_char(int v) {
@@ -166,5 +177,6 @@ string int_to_hex_char(int v) {
 		if (v == 13) { return "D"; }
 		if (v == 14) { return "E"; }
 		if (v == 15) { return "F"; }
+		else { return "Argument received is an invalid hex character"; }
 	}
 }
