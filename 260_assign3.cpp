@@ -60,8 +60,8 @@ string addbin(string bin1, string bin2)
 	}
 	string totalSum = "";
 	// loop through all bits of the smallest binary string
-	for (int i = 0; i < length; i++) {
-		asciiSum += (bin1[i] + bin2[i]);
+	for (int i = length - 1; i >= 0; i--) {
+		asciiSum += (extendedArg[i] + untouchedArg[i]);
 		// if the sum of the ASCII codes of the chars is 96, the bit = 0
 		if (asciiSum == 96) {
 			totalSum.insert(0, "0");
@@ -72,7 +72,7 @@ string addbin(string bin1, string bin2)
 			// otherwise, there is a carry to the next bit position
 			carry = 1;
 			// and a 1 is still put at that bit position
-			totalSum.insert(0, "1");
+			totalSum.insert(0, "0");
 		}
 		// if there is a carry, handle it
 		if (carry == 1) {
@@ -82,6 +82,11 @@ string addbin(string bin1, string bin2)
 			asciiSum = 0;
 		}
 	}
+	// check if there is a carry after adding the last bits
+	if (asciiSum == 1) {
+		totalSum.insert(0, "1");
+	}
+	cout << "TotalSum: " << totalSum << endl;
 	return totalSum;
 }
 
@@ -99,6 +104,5 @@ string bitExtension(string bin, int desiredLength) {
 	for(int i = 0; i < desiredLength - bin.length(); i++) {
 		strToInsert.insert(0, "0");
 	}
-	cout << "bitExtension test: " << strToInsert << endl;
 	return strToInsert;
 }
