@@ -46,11 +46,21 @@ string addbin(string bin1, string bin2)
 	// initialize variables and reutrn value
 	int carry = 0;
 	int asciiSum = 0;
-	int shortestLength = bin1.length() > bin2.length() ? bin2.length() : bin1.length(); 
-	cout << "Shortest length test : " << shortestLength << endl;
+	string extendedArg;
+	string untouchedArg;
+	// get the length of the longest argument
+	int length = bin1.length() > bin2.length() ? bin1.length() : bin2.length();
+	// extend the other argument to match the length of the other 
+	if (bin1.length() < length) {
+		extendedArg = bitExtension(bin1, length);
+		untouchedArg = bin2;
+	} else {
+		extendedArg = bitExtension(bin2, length);
+		untouchedArg = bin1;
+	}
 	string totalSum = "";
 	// loop through all bits of the smallest binary string
-	for (int i = 0; i < shortestLength; i++) {
+	for (int i = 0; i < length; i++) {
 		asciiSum += (bin1[i] + bin2[i]);
 		// if the sum of the ASCII codes of the chars is 96, the bit = 0
 		if (asciiSum == 96) {
@@ -84,7 +94,7 @@ cout << "addhex" << endl;
 // my own functions
 // extends a binary strings bits with leading zeros
 string bitExtension(string bin, int desiredLength) {
-	string strToInsert = "";
+	string strToInsert = bin;
 	// create a string full of zeros of the rigth length
 	for(int i = 0; i < desiredLength - bin.length(); i++) {
 		strToInsert.insert(0, "0");
