@@ -19,21 +19,24 @@ string addbin(string, string);
 string addhex(string, string); 
 // adds leading 0s to binary strings to make addition easier
 string bitExtension(string, int);
+string int_to_hex_char(int);
 int hex_char_to_int(char);
 
 
 int main()
 {
 	
-	cout<<"binary 1101 + 1000 = "<<addbin("1101", "1000")<<endl;   //you should get 10101
-	cout<<"binary 11000 + 1011 = "<<addbin("11000", "1011")<<endl; //you should get 100011
-	cout<<"binary 11111111 + 1 = "<<addbin("11111111", "1")<<endl; //you should get 100000000
-	cout<<"binary 101010 + 10 = "<<addbin("101010", "10")<<endl<<endl; //you should get 101100
+	cout<<"binary 10001010 + 101 = "<<addbin("10001010", "101")<<endl;
+	cout<<"binary 11 + 100101 = "<<addbin("11", "100101")<<endl;
+	cout<<"binary 10 + 10 = "<<addbin("10", "10")<<endl;
+	cout<<"binary 1000101011 + 10001 = "<<addbin("1000101011", "10001")<<endl; 
+	cout<<"binary 10001 + 111110 = "<<addbin("10001", "111110")<<endl<<endl;
 	
-	cout<<"hexadecimal A4 + A5 = "<<addhex("A4", "A5")<<endl;  //you should get 149
-	cout<<"hexadecimal 2B + C = "<<addhex("2B",  "C")<<endl;    //you should get 37
-	cout<<"hexadecimal FABC + 789 = "<<addhex("FABC", "789")<<endl;  //you should get 10245
-	cout<<"hexadecimal FFFFFF + FF = "<<addhex("FFFFFF", "FF")<<endl<<endl; //you should get 10000FE 
+	cout<<"hexadecimal BA2 + 697 = "<<addhex("BA2", "697")<<endl;
+	cout<<"hexadecimal 2341F4 + F = "<<addhex("2341F4",  "F")<<endl;
+	cout<<"hexadecimal B + F12 = "<<addhex("5789", "789")<<endl;
+	cout<<"hexadecimal 5789 + ED4F = "<<addhex("FABC", "ED4F")<<endl;
+	cout<<"hexadecimal EEFDAB + 62 = "<<addhex("EEFDAB", "62")<<endl<<endl;
 	
 
 	system("PAUSE");
@@ -62,6 +65,9 @@ string addbin(string bin1, string bin2)
 	string totalSum = "";
 	// loop through all bits of the smallest binary string
 	for (int i = length - 1; i >= 0; i--) {
+		// reset carry value to 0
+		carry = 0;
+		// add the column
 		asciiSum += (extendedArg[i] + untouchedArg[i]);
 		// if the sum of the ASCII codes of the chars is 96, the bit = 0
 		if (asciiSum == 96) {
@@ -87,7 +93,6 @@ string addbin(string bin1, string bin2)
 	if (asciiSum == 1) {
 		totalSum.insert(0, "1");
 	}
-	cout << "TotalSum: " << totalSum << endl;
 	return totalSum;
 }
 
@@ -107,13 +112,16 @@ string addhex(string hex1, string hex2)
 	}
 	// iterate through the hex strings starting from the LSB and add
 	for (int i = length - 1; i >= 0; i--) {
+		// reset carry value to 0
+		carry = 0;
+		// add the column
 		columnSum += hex_char_to_int(extendedArg[i]) + hex_char_to_int(untouchedArg[i]);
 		// handle the addition of the column
 		if (columnSum > 15) {
-			totalSum.insert(0, to_string(columnSum % 16));
+			totalSum.insert(0, int_to_hex_char(columnSum % 16));
 			carry = 1;
 		} else {
-			totalSum.insert(0, to_string(columnSum));
+			totalSum.insert(0, int_to_hex_char(columnSum));
 		}
 		// if theres a carry, add it to the column sum for the next iteration
 		if (carry == 1) {
@@ -153,4 +161,19 @@ int hex_char_to_int(char c) {
 	if (c == 'E') { return 14; }
 	if (c == 'F') { return 15; }
 	else { return -1; }
+}
+// converts an int to a hex char
+string int_to_hex_char(int v) {
+	// if v is < 11, return v as char
+	if (v < 10) { return to_string(v); }
+	// otherwise, figure out what symbol it should be
+	else {
+		if (v == 10) { return "A"; }
+		if (v == 11) { return "B"; }
+		if (v == 12) { return "C"; }
+		if (v == 13) { return "D"; }
+		if (v == 14) { return "E"; }
+		if (v == 15) { return "F"; }
+		else { return "Argument received is an invalid hex character"; }
+	}
 }
